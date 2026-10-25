@@ -1,0 +1,142 @@
+/* --- 1. GIAO DIỆN DI ĐỘNG MẶC ĐỊNH (Mobile First) --- */
+html {
+    scroll-behavior: smooth; /* Hành vi cuộn mặc định */
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f7f5f0;
+    color: #2c2c2c;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    font-size: 1.8rem;
+    color: #5c4d3c;
+    margin-bottom: 8px;
+}
+
+header p {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+/* Lưới một cột với khoảng cách 10px giữa các hàng và cột */
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.figure-card {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.figure-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+    object-fit: cover;
+    transition: border-radius 0.3s ease;
+}
+
+.figure-card figcaption {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #444;
+    line-height: 1.4;
+}
+
+
+/* --- 2. TRUY VẤN #1: MÁY TÍNH BẢNG (Từ 772px trở lên) --- */
+@media screen and (min-width: 772px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr); /* Lưới hai cột */
+    }
+
+    /* Đặt bán kính đường viền trên các hình để tạo hình tròn */
+    .figure-card img {
+        border-radius: 50%;
+        aspect-ratio: 1 / 1; /* Giúp ảnh vuông vức để bo tròn đẹp mắt */
+    }
+
+    /* Đặt con số (thẻ figure) cuối cùng để chiếm cả hai cột */
+    .figure-card:last-child {
+        grid-column: span 2;
+    }
+    
+    /* Riêng hình cuối chiếm cả 2 cột thì cho ảnh trở lại hình chữ nhật bo góc nhẹ cho đẹp */
+    .figure-card:last-child img {
+        border-radius: 8px;
+        aspect-ratio: auto;
+    }
+}
+
+
+/* --- 3. TRUY VẤN #2: MÀN HÌNH LỚN (Từ 992px trở lên) --- */
+@media screen and (min-width: 992px) {
+    .grid-container {
+        grid-template-columns: repeat(3, 1fr); /* Lưới ba cột */
+    }
+
+    /* Xóa bán kính đường viền khỏi tất cả các hình (đưa về vuông/bo nhẹ chuẩn) */
+    .figure-card img {
+        border-radius: 8px;
+        aspect-ratio: auto;
+    }
+
+    /* Đặt mỗi con số thứ ba (3, 6, 9...) để chiếm cả hai cột */
+    .figure-card:nth-child(3n) {
+        grid-column: span 2;
+    }
+}
+
+
+/* --- 4. TRUY VẤN #3: GIẢM CHUYỂN ĐỘNG (Prefers-reduced-motion) --- */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto; /* Xóa hành vi cuộn mượt */
+    }
+    
+    .figure-card img {
+        transition: none; /* Xóa mọi hiệu ứng chuyển động */
+    }
+}
+
+
+/* --- 5. TRUY VẤN #4: CHẾ ĐỘ MÀU TỐI (Dark Mode / prefers-color-scheme) --- */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #121212;
+        color: #f1f1f1;
+    }
+
+    h1, header p {
+        color: #f1f1f1;
+    }
+
+    /* Thay đổi màu nền của các hình (thẻ chứa card) thành màu tối */
+    .figure-card {
+        background-color: #1e1e1e;
+        border: 1px solid #000000; /* Thay đổi màu viền thành màu đen/tối tương phản */
+    }
+
+    /* Thay đổi màu phông chữ của các hình thành màu nhạt hơn (màu vàng dịu chống lỗi tương phản WAVE) */
+    .figure-card figcaption {
+        color: #ffe082; 
+    }
+}
